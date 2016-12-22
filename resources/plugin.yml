@@ -1,0 +1,8 @@
+name: TheAura-commons
+version: 1.0.0
+description: Backend API for all modules used in TheAura.
+author: Shortninja
+website: www.theaura.us
+main: us.theaura.gemen.TheAura
+prefix: Gemen
+depend: [ProtocolLib]

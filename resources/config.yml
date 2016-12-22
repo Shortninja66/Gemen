@@ -1,0 +1,28 @@
+# TheAura | Made with love by Shortninja - ♥
+
+############################################################
+# +------------------------------------------------------+ #
+# |                       Databases                      | #
+# +------------------------------------------------------+ #
+############################################################
+
+# MongoDB connection information
+mongodb:
+  user: "broughtfromhome"
+  password: "broughtmongofromdb"
+
+# MySQL connection information
+mysql:
+  server: "localhost"
+  database: "theaura"
+  user: "root"
+  password: "password"
+
+############################################################
+# +------------------------------------------------------+ #
+# |                         Lag                          | #
+# +------------------------------------------------------+ #
+############################################################
+
+# The maximum amount of keys allowed in a single JSON log file.
+log-keys: 7500
