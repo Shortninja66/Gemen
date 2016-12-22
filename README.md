@@ -1,4 +1,4 @@
-# Gemen
+# Gemen v0.9.0-BETA
 This is the main API used to connect all of TheAura's "modules" (otherwise known as plugins) together. Usage of the API can be for anything, whether it be for your own server or to help add onto TheAura!
 
 #### What is TheAura?
