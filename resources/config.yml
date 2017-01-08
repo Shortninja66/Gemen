@@ -8,8 +8,8 @@
 
 # MongoDB connection information
 mongodb:
-  user: "broughtfromhome"
-  password: "broughtmongofromdb"
+  user: "user"
+  password: "password"
 
 # MySQL connection information
 mysql:
