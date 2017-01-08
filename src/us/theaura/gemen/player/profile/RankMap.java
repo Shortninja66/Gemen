@@ -9,23 +9,27 @@ import java.util.UUID;
  * 
  * (!) ENUM NAMES CANNOT CHANGE AFTER FIRST LOAD.
  * 
+ * TODO: JSON hover for information
+ * 
  * @since 18 December 2016 12:54 PM
  * @author Shortninja
  */
 
 public enum RankMap
 {
-	SUPPORTER("Supporter"), CONTRIBUTOR("Contributor"), ENTHUSIAST("Enthusiast"),
-	INTERN("Intern"), MODERATOR("Moderator"), ADMINISTRATOR("Administrator"),
-	BUILDER("Builder"), TESTER("Tester"), NOTABLE("Notable");
+	SUPPORTER("Supporter", "a"), CONTRIBUTOR("Contributor", "b"), ENTHUSIAST("Enthusiast", "6"),
+	INTERN("Intern", "e"), MODERATOR("Moderator", "c"), ADMINISTRATOR("Administrator", "4"),
+	BUILDER("Builder", "5"), TESTER("Tester", "9"), NOTABLE("Notable", "3");
 	
 	private static Map<UUID, RankMap> ranks = new HashMap<UUID, RankMap>();
 	private String identifier;
+	private String color;
 	private UUID uuid;
 	
-	RankMap(String identifier)
+	RankMap(String identifier, String color)
 	{
 		this.identifier = identifier;
+		this.color = "&" + color;
 		uuid = UUID.nameUUIDFromBytes(name().getBytes());
 	}
 	

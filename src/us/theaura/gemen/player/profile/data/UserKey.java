@@ -23,7 +23,7 @@ public enum UserKey
 {
 	JOIN_TIME("join-time"), JOIN_DATE("join-date"), UNIQUE_JOIN("unique-join"),
 	IGNORE_PACK("ignore-pack"), PREFIX("prefix"), NICK("nick"), RANK("ranks"),
-	NOTABILITY("notability");
+	NOTABILITY("notability"), GUI_COLOR("gui-color");
 	
 	private static Map<Integer, UserKey> indexMap = new HashMap<Integer, UserKey>();
 	private static Map<String, UserKey> keyMap = new HashMap<String, UserKey>();

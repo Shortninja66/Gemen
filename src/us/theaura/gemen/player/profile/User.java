@@ -1,5 +1,6 @@
 package us.theaura.gemen.player.profile;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -7,9 +8,11 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import us.theaura.gemen.Backend;
 import us.theaura.gemen.player.profile.data.UserData;
 import us.theaura.gemen.player.profile.data.UserKey;
 import us.theaura.gemen.util.JavaUtils;
+import us.theaura.gemen.util.lib.thunderbolt.io.ThunderFile;
 
 /**
  * Object for compacting all user information.
@@ -26,6 +29,7 @@ public class User
 	private UserMode mode;
 	private Set<RankMap> ranks;
 	private UserData data;
+	private ThunderFile file = null;
 	private boolean isOnline = true;
 	
 	public User(UUID uuid, String name, UserLevel level, UserMode mode, Set<RankMap> ranks, UserData data)
@@ -36,6 +40,8 @@ public class User
 		this.mode = mode;
 		this.ranks = ranks;
 		this.data = data;
+		
+		file = Backend.instance().data.load(uuid.toString(), "users");
 	}
 	
 	public User(UUID uuid, String name)
@@ -64,9 +70,14 @@ public class User
 		return level;
 	}
 	
+	public UserMode mode()
+	{
+		return mode;
+	}
+	
 	public Set<RankMap> ranks()
 	{
-		return ranks;
+		return Collections.unmodifiableSet(ranks);
 	}
 	
 	public UserData data()
@@ -74,9 +85,9 @@ public class User
 		return data;
 	}
 	
-	public UserMode mode()
+	public ThunderFile file()
 	{
-		return mode;
+		return file;
 	}
 	
 	public boolean hasRank(RankMap rank)
@@ -116,7 +127,9 @@ public class User
 		data.add(UserKey.JOIN_TIME.get(), Long.toString(now));
 		data.add(UserKey.JOIN_DATE.get(), JavaUtils.getDate(now));
 		data.add(UserKey.UNIQUE_JOIN.get(), Integer.toString(1));
+		data.add(UserKey.IGNORE_PACK.get(), Boolean.toString(false));
 		data.add(UserKey.PREFIX.get(), "");
 		data.add(UserKey.NICK.get(), "&7");
+		data.add(UserKey.GUI_COLOR.get(), Integer.toString(9));
 	}
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 public class UserLevel
 {
 	public static final int START_EXPERIENCE = 50000;
-	public static final int EXPERIENCE_INCREMENT = 125000;
+	public static final int EXPERIENCE_INCREMENT = 100000;
 	public static final int LEVEL_MAX = 50;
 	private UUID uuid;
 	private int level;
