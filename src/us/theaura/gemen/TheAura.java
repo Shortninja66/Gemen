@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TheAura extends JavaPlugin
 {
 	private static TheAura plugin;
-	private Backend backend = Backend.INSTANCE;
+	private Backend backend = Backend.instance();
 	
 	@Override
 	public void onEnable()
