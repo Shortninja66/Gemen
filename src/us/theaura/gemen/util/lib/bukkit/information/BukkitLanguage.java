@@ -13,124 +13,117 @@ import us.theaura.gemen.util.lib.RomanNumeral;
  * @author Shortninja
  */
 
-public class BukkitLanguage
-{
-	public String format(String string)
-	{
+public class BukkitLanguage {
+	
+	public String format(String string) {
 		StringBuilder builder = new StringBuilder();
 		string = string.replace("_", " ").toLowerCase();
-		
-		for(String word : string.split(" "))
-		{
+
+		for(String word : string.split(" ")) {
 			builder.append(word.substring(0, 1).toUpperCase() + word.substring(1) + " ");
 		}
-		
+
 		return builder.toString().trim();
 	}
-	
-	public String getItemName(ItemStack item)
-	{
+
+	public String getItemName(ItemStack item) {
 		String itemName = getTypeName(item.getType());
 		ItemMeta itemMeta = item.getItemMeta();
-		
-		if(itemMeta.hasDisplayName())
-		{
+
+		if(itemMeta.hasDisplayName()) {
 			itemName = itemMeta.getDisplayName();
 		}
-		
+
 		return itemName;
 	}
-	
-	public String getTypeName(Material type)
-	{
+
+	public String getTypeName(Material type) {
 		return format(type.name());
 	}
-	
-	public String convertToRomanNumerals(int number)
-	{
+
+	public String convertToRomanNumerals(int number) {
 		return new RomanNumeral(number).toString();
 	}
-	
-	public String convertEnchantmentName(String enchantmentName)
-	{
+
+	public String convertEnchantmentName(String enchantmentName) {
 		String converted = "null";
-		
-		switch(enchantmentName)
-		{
+
+		switch(enchantmentName) {
 			case "ARROW_DAMAGE":
-				converted = "Power";
+			converted = "Power";
 				break;
 			case "ARROW_FIRE":
-				converted = "Flame";
+			converted = "Flame";
 				break;
 			case "ARROW_INFINITE":
-				converted = "Infinity";
+			converted = "Infinity";
 				break;
 			case "ARROW_KNOCKBACK":
-				converted = "Punch";
+			converted = "Punch";
 				break;
 			case "DAMAGE_ALL":
-				converted = "Sharpness";
+			converted = "Sharpness";
 				break;
 			case "DAMAGE_ARTHROPODS":
-				converted = "Bane of Arthropods";
+			converted = "Bane of Arthropods";
 				break;
 			case "DAMAGE_UNDEAD":
-				converted = "Smite";
+			converted = "Smite";
 				break;
 			case "DIG_SPEED":
-				converted = "Efficiency";
+			converted = "Efficiency";
 				break;
 			case "DURABILITY":
-				converted = "Unbreaking";
+			converted = "Unbreaking";
 				break;
 			case "FIRE_ASPECT":
-				converted = "Fire Aspect";
+			converted = "Fire Aspect";
 				break;
 			case "KNOCKBACK":
-				converted = "Knockback";
+			converted = "Knockback";
 				break;
 			case "LOOT_BONUS_BLOCKS":
-				converted = "Fortune";
+			converted = "Fortune";
 				break;
 			case "LOOT_BONUS_MOBS":
-				converted = "Looting";
+			converted = "Looting";
 				break;
 			case "LUCK":
-				converted = "Luck of the Sea";
+			converted = "Luck of the Sea";
 				break;
 			case "LURE":
-				converted = "Lure";
+			converted = "Lure";
 				break;
 			case "OXYGEN":
-				converted = "Respiration";
+			converted = "Respiration";
 				break;
 			case "PROTECTION_ENVIRONMENTAL":
-				converted = "Protection";
+			converted = "Protection";
 				break;
 			case "PROTECTION_EXPLOSIONS":
-				converted = "Blast Protection";
+			converted = "Blast Protection";
 				break;
 			case "PROTECTION_FALL":
-				converted = "Feather Falling";
+			converted = "Feather Falling";
 				break;
 			case "PROTECTION_FIRE":
-				converted = "Fire Protection";
+			converted = "Fire Protection";
 				break;
 			case "PROTECTION_PROJECTILE":
-				converted = "Projectile Protection";
+			converted = "Projectile Protection";
 				break;
 			case "SILK_TOUCH":
-				converted = "Silk Touch";
+			converted = "Silk Touch";
 				break;
 			case "THORNS":
-				converted = "Thorns";
+			converted = "Thorns";
 				break;
 			case "WATER_WORKER":
-				converted = "Aqua Affinity";
+			converted = "Aqua Affinity";
 				break;
 		}
-		
+
 		return converted;
 	}
+	
 }

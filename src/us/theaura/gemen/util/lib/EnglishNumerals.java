@@ -9,38 +9,38 @@ import java.text.DecimalFormat;
  * @author www.rgagnon.com
  */
 
-public class EnglishNumerals
-{
-	private static final String[] tensNames = { "", " ten", " twenty", " thirty", " forty", " fifty", " sixty", " seventy", " eighty", " ninety" };
-	private static final String[] numNames = { "", " one", " two", " three", " four", " five", " six", " seven", " eight", " nine", " ten", " eleven", " twelve", " thirteen", " fourteen", " fifteen", " sixteen", " seventeen", " eighteen", " nineteen" };
+public class EnglishNumerals {
+	private static final String[] tensNames = {
+	"", " ten", " twenty", " thirty", " forty", " fifty", " sixty", " seventy", " eighty", " ninety"
+	};
+	private static final String[] numNames = {
+	"", " one", " two", " three", " four", " five", " six", " seven", " eight", " nine", " ten", " eleven", " twelve", " thirteen", " fourteen", " fifteen", " sixteen", " seventeen", " eighteen", " nineteen"
+	};
 
-	private EnglishNumerals(){}
+	private EnglishNumerals() {
+	}
 
-	private static String convertLessThanOneThousand(int number)
-	{
+	private static String convertLessThanOneThousand(int number) {
 		String soFar;
 
-		if(number % 100 < 20)
-		{
+		if(number % 100 < 20) {
 			soFar = numNames[number % 100];
 			number /= 100;
-		}else
-		{
+		}else {
 			soFar = numNames[number % 10];
 			number /= 10;
 
 			soFar = tensNames[number % 10] + soFar;
 			number /= 10;
 		}
-		if(number == 0) return soFar;
+		if(number == 0)
+			return soFar;
 		return numNames[number] + " hundred" + soFar;
 	}
 
-	public static String convert(long number)
-	{
+	public static String convert(long number) {
 		// 0 to 999 999 999 999
-		if(number == 0)
-		{
+		if(number == 0) {
 			return "zero";
 		}
 
@@ -61,43 +61,40 @@ public class EnglishNumerals
 		int thousands = Integer.parseInt(snumber.substring(9, 12));
 
 		String tradBillions;
-		switch(billions)
-		{
-		case 0:
+		switch(billions) {
+			case 0:
 			tradBillions = "";
-			break;
-		case 1:
+				break;
+			case 1:
 			tradBillions = convertLessThanOneThousand(billions) + " billion ";
-			break;
-		default:
+				break;
+			default:
 			tradBillions = convertLessThanOneThousand(billions) + " billion ";
 		}
 		String result = tradBillions;
 
 		String tradMillions;
-		switch(millions)
-		{
-		case 0:
+		switch(millions) {
+			case 0:
 			tradMillions = "";
-			break;
-		case 1:
+				break;
+			case 1:
 			tradMillions = convertLessThanOneThousand(millions) + " million ";
-			break;
-		default:
+				break;
+			default:
 			tradMillions = convertLessThanOneThousand(millions) + " million ";
 		}
 		result = result + tradMillions;
 
 		String tradHundredThousands;
-		switch(hundredThousands)
-		{
-		case 0:
+		switch(hundredThousands) {
+			case 0:
 			tradHundredThousands = "";
-			break;
-		case 1:
+				break;
+			case 1:
 			tradHundredThousands = "one thousand ";
-			break;
-		default:
+				break;
+			default:
 			tradHundredThousands = convertLessThanOneThousand(hundredThousands) + " thousand ";
 		}
 		result = result + tradHundredThousands;
@@ -108,30 +105,27 @@ public class EnglishNumerals
 
 		return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
 	}
-	
-	public enum Letters
-	{
-		A(), B(), C(), D(), E(), F(), G(), H(), I(), J(), K(), L(), M(), 
-		N(), O(), P(), Q(), R(), S(), T(), U(), V(), W(), X(), Y(), Z();
-		
-		Letters(){}
-		
-		public static String get(int count)
-		{
+
+	public enum Letters {
+		A(), B(), C(), D(), E(), F(), G(), H(), I(), J(), K(), L(), M(), N(),
+		O(), P(), Q(), R(), S(), T(), U(), V(), W(), X(), Y(), Z();
+
+		Letters() {
+		}
+
+		public static String get(int count) {
 			int i = 0;
 			String match = "";
-			
-			for(Letters l : Letters.values())
-			{
-				if(i >= count)
-				{
+
+			for(Letters l : Letters.values()) {
+				if(i >= count) {
 					match = l.toString();
 					break;
 				}
-				
+
 				i++;
 			}
-			
+
 			return match;
 		}
 	}

@@ -11,48 +11,60 @@ import java.util.List;
  * @author Shortninja
  */
 
-public class TaskBus
-{
+public class TaskBus {
+	
 	private final int IDENTIFIER;
 	private final long DELAY;
 	private final double BUFFER;
 	private List<ITask> passengers = new ArrayList<ITask>();
-	
-	public TaskBus(int identifier, long delay)
-	{
+
+	/**
+	 * @param identifier ID for the given task. Rarely used, but should be unique.
+	 * @param task Tick delay for the task that should be executed.
+	 */
+	public TaskBus(int identifier, TaskDelay task) {
 		IDENTIFIER = identifier;
-		DELAY = delay;
+		DELAY = task.delay();
 		BUFFER = DELAY - (DELAY * 0.3);
 	}
-	
-	public int getIdentifier()
-	{
+
+	/**
+	 * @return ID of the task bus.
+	 */
+	public int identifier() {
 		return IDENTIFIER;
 	}
-	
-	public long getDelay()
-	{
+
+	/**
+	 * @return Tick delay that this bus uses.
+	 */
+	public long delay() {
 		return DELAY;
 	}
-	
-	public boolean addTask(ITask task, long delay)
-	{
+
+	/**
+	 * @param task Task to add.
+	 * @param delay Delay of the task. Usually not different than the bus's delay.
+	 * @return Whether or not the task was added; false if the delay is too low for the bus.
+	 */
+	public boolean addTask(ITask task, long delay) {
 		boolean added = false;
-		
-		if((DELAY - delay) - BUFFER <= 0)
-		{
+
+		if(Math.abs(DELAY - delay) - BUFFER <= 0) {
 			passengers.add(task);
 			added = true;
 		}
-		
+
 		return added;
 	}
-	
-	public void call()
-	{
-		for(ITask task : passengers)
-		{
+
+	/**
+	 * Exeutes all passenger tasks in the task bus.
+	 */
+	public void call() {
+		for(ITask task : passengers) {
 			task.execute();
 		}
 	}
+	
 }

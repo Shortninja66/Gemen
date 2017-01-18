@@ -15,34 +15,35 @@ import us.theaura.gemen.util.lib.thunderbolt.io.ThunderFile;
 import us.theaura.gemen.util.lib.thunderbolt.io.ThunderboltThreadPool;
 import us.theaura.gemen.util.lib.thunderbolt.utils.Validator;
 
-public abstract class Thunderbolt
-{
+/**
+ * Main class for Thunderbolt JSON library.
+ * 
+ * @author Daniel S. (The Gaming Grunts), Shortninja
+ */
+public abstract class Thunderbolt {
+	
 	private final static Map<String, ThunderFile> fileMap = new HashMap<String, ThunderFile>();
 	private final static String tempFile = "temp";
-	
+
 	/**
 	 * Get's the backup temp file in last-option cases.
 	 * 
 	 * @author Shortninja
 	 */
-	public static ThunderFile get()
-	{
+	public static ThunderFile get() {
 		ThunderFile file = get(tempFile);
-		
-		if(file == null)
-		{
-			try
-			{
+
+		if(file == null) {
+			try {
 				file = load(tempFile, TheAura.instance().getDataFolder().getAbsolutePath());
-			}catch (FileLoadException | IOException exception)
-			{
-				
+			}catch (FileLoadException | IOException exception) {
+
 			}
 		}
-		
+
 		return file;
 	}
-	
+
 	/**
 	 * Get a file by its name. Doesn't require .json extension. This method is
 	 * thread-safe
@@ -54,30 +55,24 @@ public abstract class Thunderbolt
 	 * @param name
 	 *            : The name of the file to get.
 	 */
-	public static ThunderFile get(String name)
-	{
+	public static ThunderFile get(String name) {
 		name = Validator.checkName(name);
 
-		synchronized(fileMap)
-		{
+		synchronized(fileMap) {
 			return fileMap.get(name);
 		}
 	}
 
-	private static ThunderFile create(String name, String path) throws FileLoadException
-	{
+	private static ThunderFile create(String name, String path) throws FileLoadException {
 		name = Validator.checkName(name);
 
-		synchronized(fileMap)
-		{
-			if(!fileMap.containsKey(name))
-			{
+		synchronized(fileMap) {
+			if(!fileMap.containsKey(name)) {
 				ThunderFile tf = new ThunderFile(name, path);
 				fileMap.put(name, tf);
 
 				return tf;
-			}else
-			{
+			}else {
 				throw new FileLoadException(name);
 			}
 		}
@@ -96,53 +91,41 @@ public abstract class Thunderbolt
 	 * @throws IOException
 	 * @throws FileLoadException
 	 */
-	public static ThunderFile load(String name, String path) throws FileLoadException, IOException
-	{
+	public static ThunderFile load(String name, String path) throws FileLoadException, IOException {
 		name = Validator.checkName(name);
 
 		boolean contains;
-		synchronized(fileMap)
-		{
+		synchronized(fileMap) {
 			contains = fileMap.containsKey(name);
 		}
 
-		if(!contains)
-		{
+		if(!contains) {
 			File f = new File(path + File.separator + name + ".json");
-			if(f.exists())
-			{
+			if(f.exists()) {
 				ThunderFile tf;
-				if(f.length() != 0)
-				{
+				if(f.length() != 0) {
 					final String s1 = name;
 					final String s2 = path;
-					Callable<byte[]> c = new Callable<byte[]>()
-					{
+					Callable<byte[]> c = new Callable<byte[]>() {
 						@Override
-						public byte[] call() throws Exception
-						{
+						public byte[] call() throws Exception {
 							return Files.readAllBytes(Paths.get(s2 + File.separator + s1 + ".json"));
 						}
 					};
-					try
-					{
+					try {
 						tf = new ThunderFile(name, path, new String(ThunderboltThreadPool.getPool().submit(c).get()));
-					}catch (InterruptedException | ExecutionException exception)
-					{
+					}catch (InterruptedException | ExecutionException exception) {
 						tf = new ThunderFile(name, path);
 					}
-				}else
-				{
+				}else {
 					tf = new ThunderFile(name, path);
 				}
 				fileMap.put(name, tf);
 				return tf;
-			}else
-			{
+			}else {
 				return create(name, path);
 			}
-		}else
-		{
+		}else {
 			throw new FileLoadException(name);
 		}
 	}
@@ -154,19 +137,16 @@ public abstract class Thunderbolt
 	 *            : The name of the file to unload
 	 * @throws IllegalArgumentException
 	 */
-	public static void unload(String name)
-	{
+	public static void unload(String name) {
 		name = Validator.checkName(name);
 
 		ThunderFile file;
-		synchronized(fileMap)
-		{
+		synchronized(fileMap) {
 			file = fileMap.remove(name);
 		}
 
-		if(file == null)
-		{
-			
+		if(file == null) {
+
 		}
 	}
 
@@ -177,21 +157,17 @@ public abstract class Thunderbolt
 	 *            : The name of the file to delete
 	 * @throws IOException
 	 */
-	public static void delete(String name)
-	{
+	public static void delete(String name) {
 		name = Validator.checkName(name);
 
 		ThunderFile tf;
-		synchronized(fileMap)
-		{
+		synchronized(fileMap) {
 			tf = fileMap.remove(name);
 		}
 
-		if(tf == null)
-		{
-			
-		}else
-		{
+		if(tf == null) {
+
+		}else {
 			delete(name, tf.getPath());
 		}
 	}
@@ -204,28 +180,23 @@ public abstract class Thunderbolt
 	 * @param path
 	 *            : The path to the file
 	 */
-	private static void delete(String name, String path)
-	{
+	private static void delete(String name, String path) {
 		name = Validator.checkName(name);
 
 		boolean exists;
-		synchronized(fileMap)
-		{
+		synchronized(fileMap) {
 			exists = fileMap.containsKey(name);
 		}
 
-		if(!exists)
-		{
-			try
-			{
+		if(!exists) {
+			try {
 				Files.delete(Paths.get(path + File.separator + name + ".json"));
-			}catch (IOException exception)
-			{
-				
+			}catch (IOException exception) {
+
 			}
-		}else
-		{
+		}else {
 			delete(name);
 		}
 	}
+	
 }

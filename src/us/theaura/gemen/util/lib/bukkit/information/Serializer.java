@@ -17,65 +17,56 @@ import org.bukkit.World;
  * @author Shortninja
  */
 
-public class Serializer
-{
-	public static String[] deserialize(String string)
-	{
+public class Serializer {
+	
+	public static String[] deserialize(String string) {
 		return string.split(";");
 	}
-	
-	public static String serializeLocation(Location location)
-	{
+
+	public static String serializeLocation(Location location) {
 		return location.getX() + ";" + location.getY() + ";" + location.getZ();
 	}
-	
-	public static List<String> serializeLocations(Set<Location> locations)
-	{
+
+	public static List<String> serializeLocations(Set<Location> locations) {
 		List<String> serializedLocations = new ArrayList<String>();
-		
-		for(Location location : locations)
-		{
+
+		for(Location location : locations) {
 			serializedLocations.add(serializeLocation(location));
 		}
-		
+
 		return serializedLocations;
 	}
 
-	public static Location deserializeLocation(World world, String string)
-	{
+	public static Location deserializeLocation(World world, String string) {
 		String[] parts = string.split(";");
-		
+
 		return new Location(world, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
 	}
-	
-	public static Set<Location> deserializeLocations(World world, ArrayList<String> locations)
-	{
+
+	public static Set<Location> deserializeLocations(World world, ArrayList<String> locations) {
 		Set<Location> deserializedLocations = new HashSet<Location>();
-		
-		for(String object : locations)
-		{
+
+		for(String object : locations) {
 			deserializedLocations.add(deserializeLocation(world, object));
 		}
-		
+
 		return deserializedLocations;
 	}
-	
-	public static Location deserializeFullLocation(World world, String string)
-	{
+
+	public static Location deserializeFullLocation(World world, String string) {
 		String[] parts = string.split(";");
-		
+
 		return new Location(world, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Float.parseFloat(parts[3]), Float.parseFloat(parts[4]));
 	}
-	
-	public static String serializeChunk(Chunk chunk)
-	{
+
+	public static String serializeChunk(Chunk chunk) {
 		return chunk.getWorld().getName() + ";" + chunk.getX() + ";" + chunk.getZ();
 	}
-	
-	public static Chunk deserializeChunk(String string)
-	{
+
+	public static Chunk deserializeChunk(String string) {
 		String[] parts = string.split(";");
-		
+
 		return Bukkit.getWorld(parts[0]).getChunkAt(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 	}
+	
 }

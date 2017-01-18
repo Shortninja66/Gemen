@@ -10,8 +10,20 @@ import org.bukkit.inventory.ItemStack;
  * @author Shortninja
  */
 
-public interface ClickAction
-{
+public interface ClickAction {
+	
+	/**
+	 * Action to occur when a player clicks on a certain item.
+	 * 
+	 * @param player Player that clicked.
+	 * @param item Item that was clicked.
+	 * @param slot Inventory slot of the clicked item.
+	 */
 	public void click(Player player, ItemStack item, int slot);
+	
+	/**
+	 * @return Whether or not the inventory should be closed after a click has occurred.
+	 */
 	public boolean shouldClose();
+	
 }

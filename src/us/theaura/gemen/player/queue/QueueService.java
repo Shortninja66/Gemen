@@ -11,37 +11,47 @@ import java.util.UUID;
  * @author Shortninja
  */
 
-public class QueueService
-{
-	private static Map<UUID, Queue> queues = new HashMap<UUID, Queue>();
+public class QueueService {
 	
-	public void add(Queue queue)
-	{
+	private static Map<UUID, Queue> queues = new HashMap<UUID, Queue>();
+	private static final String CONFIRM = "yes";
+
+	public QueueService() {}
+	
+	/**
+	 * Adds the given queue to the "available" map.
+	 * 
+	 * @param queue Queue to add.
+	 */
+	public void add(Queue queue) {
 		queues.put(queue.uuid(), queue);
 	}
-	
-	public void respond(UUID uuid, String response)
-	{
-		if(!queues.containsKey(uuid))
-		{
+
+	/**
+	 * Submits the given response to the associated queue.
+	 * 
+	 * @param uuid UUID associated with queue.
+	 * @param response Response in chat.
+	 */
+	public void respond(UUID uuid, String response) {
+		if(!queues.containsKey(uuid)) {
 			return;
 		}
-		
+
 		queues.get(uuid).submit(parseResponse(response));
 	}
-	
-	private boolean parseResponse(String response)
-	{
+
+	private boolean parseResponse(String response) {
 		boolean hasAccepted = false;
-		
-		switch(response.toLowerCase().trim())
-		{
-			case "yes":
-			case "ok":
-			case "okay":
+
+		for(String word : response.split(" ")) {
+			if(word.equalsIgnoreCase(CONFIRM) || word.toLowerCase().contains(CONFIRM)) {
 				hasAccepted = true;
+				break;
+			}
 		}
-		
+
 		return hasAccepted;
 	}
+	
 }

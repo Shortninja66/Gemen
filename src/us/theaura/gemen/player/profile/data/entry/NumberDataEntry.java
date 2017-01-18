@@ -9,13 +9,12 @@ package us.theaura.gemen.player.profile.data.entry;
  * @author Shortninja
  */
 
-public class NumberDataEntry extends DataEntry
-{
+public class NumberDataEntry extends DataEntry {
+	
 	/**
 	 * @return The zeroth-index value as a double.
 	 */
-	public double value()
-	{
+	public double value() {
 		return Double.parseDouble(value(0));
 	}
 	
@@ -23,11 +22,11 @@ public class NumberDataEntry extends DataEntry
 	 * @param value Double to set as the main value.
 	 * @return Current instance
 	 */
-	public NumberDataEntry setValue(double value)
-	{
+	public NumberDataEntry setValue(double value) {
 		values.clear();
 		addValue(Double.toString(value));
 		
 		return this;
 	}
+	
 }

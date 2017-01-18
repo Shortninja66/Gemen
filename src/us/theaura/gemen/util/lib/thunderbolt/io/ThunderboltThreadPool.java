@@ -3,14 +3,15 @@ package us.theaura.gemen.util.lib.thunderbolt.io;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public abstract class ThunderboltThreadPool
-{
+public abstract class ThunderboltThreadPool {
+	
 	private static ExecutorService pool = Executors.newCachedThreadPool();
 
-	private ThunderboltThreadPool(){}
+	private ThunderboltThreadPool() {
+	}
 
-	public static ExecutorService getPool()
-	{
+	public static ExecutorService getPool() {
 		return pool;
 	}
+	
 }

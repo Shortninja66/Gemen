@@ -8,13 +8,12 @@ package us.theaura.gemen.player.profile.data.entry;
  * @author Shortninja
  */
 
-public class BooleanDataEntry extends DataEntry
-{
+public class BooleanDataEntry extends DataEntry {
+	
 	/**
 	 * @return The zeroth-index value as a boolean.
 	 */
-	public boolean value()
-	{
+	public boolean value() {
 		return Boolean.parseBoolean(value(0));
 	}
 	
@@ -22,11 +21,11 @@ public class BooleanDataEntry extends DataEntry
 	 * @param value Boolean to set as the main value.
 	 * @return Current instance.
 	 */
-	public BooleanDataEntry setValue(boolean value)
-	{
+	public BooleanDataEntry setValue(boolean value) {
 		values.clear();
 		addValue(Boolean.toString(value));
 		
 		return this;
 	}
+	
 }

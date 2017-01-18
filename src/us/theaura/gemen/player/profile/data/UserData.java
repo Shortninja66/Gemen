@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import us.theaura.gemen.player.profile.data.entry.BooleanDataEntry;
 import us.theaura.gemen.player.profile.data.entry.DataEntry;
+import us.theaura.gemen.player.profile.data.entry.NumberDataEntry;
+import us.theaura.gemen.player.profile.data.entry.StringDataEntry;
+import us.theaura.gemen.util.JavaUtils;
 
 /**
  * Object class for containing abstract data that can be passed from other modules
@@ -15,16 +18,15 @@ import us.theaura.gemen.player.profile.data.entry.DataEntry;
  * @author Shortninja
  */
 
-public class UserData
-{
-	public static final int MAX = UserKey.values().length - 1;
+public class UserData {
+	
+	public static final int MAX = UserKey.values().length;
 	private UUID uuid;
 	private String stringUuid;
-	private DataEntry[] data = new DataEntry[MAX];
+	private final DataEntry[] DATA = new DataEntry[MAX];
 	private boolean hasUpdated = true;
 	
-	public UserData(UUID uuid)
-	{
+	public UserData(UUID uuid) {
 		this.uuid = uuid;
 		stringUuid = uuid.toString();
 	}
@@ -32,25 +34,29 @@ public class UserData
 	/**
 	 * @return Holding player's UUID.
 	 */
-	public UUID uuid()
-	{
+	public UUID uuid() {
 		return uuid;
+	}
+	
+	/**
+	 * @return Held UUID as a string.
+	 */
+	public String stringUuid() {
+		return stringUuid;
 	}
 	
 	/**
 	 * @param index Index to search data array for.
 	 * @return Found value; may be null.
 	 */
-	public DataEntry value(int index)
-	{
-		return data[index];
+	public DataEntry value(int index) {
+		return DATA[index];
 	}
 	
 	/**
 	 * @return Whether or not the data array has been set to changed.
 	 */
-	public boolean hasUpdated()
-	{
+	public boolean hasUpdated() {
 		return hasUpdated;
 	}
 	
@@ -58,12 +64,10 @@ public class UserData
 	 * @param index Index to validate.
 	 * @return Whether or not the given index is possible to use with the data array.
 	 */
-	public boolean checkValidity(int index)
-	{
+	public boolean checkValidity(int index) {
 		boolean isValid = index < 0 || index >= MAX;
 		
-		if(!isValid)
-		{
+		if(!isValid) {
 			
 		}
 		
@@ -73,8 +77,7 @@ public class UserData
 	/**
 	 * @param hasUpdated Whether or not the data array should be set as changed.
 	 */
-	public void setUpdated(boolean hasUpdated)
-	{
+	public void setUpdated(boolean hasUpdated) {
 		this.hasUpdated = hasUpdated;
 	}
 	
@@ -82,40 +85,28 @@ public class UserData
 	 * @param index Index to update.
 	 * @param value String value to set.
 	 */
-	public void add(int index, String value)
-	{
-//		if(JavaUtils.isInteger(value))
-//		{
-//			data[index] = new NumberDataEntry().setValue(Double.valueOf(value));
-//		}else data[index] = new StringDataEntry().setValue(value);
+	public void put(int index, String value) {
+		if(JavaUtils.isInteger(value)) {
+			DATA[index] = new NumberDataEntry().setValue(Double.valueOf(value));
+		}else if(value.equals("true") || value.equals("false")) {
+			DATA[index] = new BooleanDataEntry().setValue(Boolean.valueOf(value));
+		}else DATA[index] = new StringDataEntry().setValue(value);
 		
 		update(index, value);
 	}
 	
 	/**
 	 * @param index Index to update.
-	 * @param value Boolean value to set.
+	 * @param value List value to set.
 	 */
-	public void add(int index, boolean value)
-	{
-		data[index] = new BooleanDataEntry().setValue(value);
-		update(index, value);
-	}
-	
-	/**
-	 * @param index Index to update.
-	 * @param value List<String> value to set.
-	 */
-	public void add(int index, List<String> values)
-	{
+	public void put(int index, List<String> values) {
 		StringBuilder builder = new StringBuilder().append("| ");
 		
-		for(String string : values)
-		{
+		for(String string : values) {
 			builder.append(string + " | ");
 		}
 		
-		data[index] = new DataEntry().setValues(values);
+		DATA[index] = new DataEntry().setValues(values);
 		update(index, builder.toString().trim());
 	}
 	
@@ -125,8 +116,9 @@ public class UserData
 	 * @param index Index that was updated.
 	 * @param value Object value that was set.
 	 */
-	private void update(int index, Object value)
-	{
+	private void update(int index, Object value) {
+		DATA[index].update();
 		setUpdated(true);
 	}
+	
 }

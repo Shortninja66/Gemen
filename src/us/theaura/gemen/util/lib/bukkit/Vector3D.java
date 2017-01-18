@@ -19,8 +19,8 @@ package us.theaura.gemen.util.lib.bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class Vector3D
-{
+public class Vector3D {
+	
 	/**
 	 * Represents the null (0, 0, 0) origin.
 	 */
@@ -32,8 +32,7 @@ public class Vector3D
 	/**
 	 * Construct an immutable 3D vector.
 	 */
-	public Vector3D(double x, double y, double z)
-	{
+	public Vector3D(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -45,8 +44,7 @@ public class Vector3D
 	 * @param location
 	 *            - the location to copy.
 	 */
-	public Vector3D(Location location)
-	{
+	public Vector3D(Location location) {
 		this(location.toVector());
 	}
 
@@ -57,9 +55,9 @@ public class Vector3D
 	 * @param vector
 	 *            - the mutable real Bukkit vector to copy.
 	 */
-	public Vector3D(Vector vector)
-	{
-		if(vector == null) throw new IllegalArgumentException("Vector cannot be NULL.");
+	public Vector3D(Vector vector) {
+		if(vector == null)
+			throw new IllegalArgumentException("Vector cannot be NULL.");
 		this.x = vector.getX();
 		this.y = vector.getY();
 		this.z = vector.getZ();
@@ -70,8 +68,7 @@ public class Vector3D
 	 * 
 	 * @return Real 3D vector.
 	 */
-	public Vector toVector()
-	{
+	public Vector toVector() {
 		return new Vector(x, y, z);
 	}
 
@@ -83,9 +80,9 @@ public class Vector3D
 	 *            - the other vector.
 	 * @return The new result vector.
 	 */
-	public Vector3D add(Vector3D other)
-	{
-		if(other == null) throw new IllegalArgumentException("other cannot be NULL");
+	public Vector3D add(Vector3D other) {
+		if(other == null)
+			throw new IllegalArgumentException("other cannot be NULL");
 		return new Vector3D(x + other.x, y + other.y, z + other.z);
 	}
 
@@ -97,8 +94,7 @@ public class Vector3D
 	 *            - the other vector.
 	 * @return The new result vector.
 	 */
-	public Vector3D add(double x, double y, double z)
-	{
+	public Vector3D add(double x, double y, double z) {
 		return new Vector3D(this.x + x, this.y + y, this.z + z);
 	}
 
@@ -110,9 +106,9 @@ public class Vector3D
 	 *            - the other position.
 	 * @return The new result position.
 	 */
-	public Vector3D subtract(Vector3D other)
-	{
-		if(other == null) throw new IllegalArgumentException("other cannot be NULL");
+	public Vector3D subtract(Vector3D other) {
+		if(other == null)
+			throw new IllegalArgumentException("other cannot be NULL");
 		return new Vector3D(x - other.x, y - other.y, z - other.z);
 	}
 
@@ -124,8 +120,7 @@ public class Vector3D
 	 *            - the other vector.
 	 * @return The new result vector.
 	 */
-	public Vector3D subtract(double x, double y, double z)
-	{
+	public Vector3D subtract(double x, double y, double z) {
 		return new Vector3D(this.x - x, this.y - y, this.z - z);
 	}
 
@@ -136,8 +131,7 @@ public class Vector3D
 	 *            - multiplier.
 	 * @return The new result.
 	 */
-	public Vector3D multiply(int factor)
-	{
+	public Vector3D multiply(int factor) {
 		return new Vector3D(x * factor, y * factor, z * factor);
 	}
 
@@ -148,8 +142,7 @@ public class Vector3D
 	 *            - multiplier.
 	 * @return The new result.
 	 */
-	public Vector3D multiply(double factor)
-	{
+	public Vector3D multiply(double factor) {
 		return new Vector3D(x * factor, y * factor, z * factor);
 	}
 
@@ -160,9 +153,9 @@ public class Vector3D
 	 *            - the divisor.
 	 * @return The new result.
 	 */
-	public Vector3D divide(int divisor)
-	{
-		if(divisor == 0) throw new IllegalArgumentException("Cannot divide by null.");
+	public Vector3D divide(int divisor) {
+		if(divisor == 0)
+			throw new IllegalArgumentException("Cannot divide by null.");
 		return new Vector3D(x / divisor, y / divisor, z / divisor);
 	}
 
@@ -173,9 +166,9 @@ public class Vector3D
 	 *            - the divisor.
 	 * @return The new result.
 	 */
-	public Vector3D divide(double divisor)
-	{
-		if(divisor == 0) throw new IllegalArgumentException("Cannot divide by null.");
+	public Vector3D divide(double divisor) {
+		if(divisor == 0)
+			throw new IllegalArgumentException("Cannot divide by null.");
 		return new Vector3D(x / divisor, y / divisor, z / divisor);
 	}
 
@@ -184,14 +177,13 @@ public class Vector3D
 	 * 
 	 * @return The new result.
 	 */
-	public Vector3D abs()
-	{
+	public Vector3D abs() {
 		return new Vector3D(Math.abs(x), Math.abs(y), Math.abs(z));
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return String.format("[x: %s, y: %s, z: %s]", x, y, z);
 	}
+	
 }

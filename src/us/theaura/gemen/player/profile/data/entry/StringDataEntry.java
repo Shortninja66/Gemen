@@ -8,13 +8,12 @@ package us.theaura.gemen.player.profile.data.entry;
  * @author Shortninja
  */
 
-public class StringDataEntry extends DataEntry
-{
+public class StringDataEntry extends DataEntry {
+	
 	/**
 	 * @return The zeroth-index value as a String.
 	 */
-	public String value()
-	{
+	public String value() {
 		return value(0);
 	}
 	
@@ -22,11 +21,11 @@ public class StringDataEntry extends DataEntry
 	 * @param value String to set as the main value.
 	 * @return Current instance.
 	 */
-	public StringDataEntry setValue(String value)
-	{
+	public StringDataEntry setValue(String value) {
 		values.clear();
 		addValue(value);
 		
 		return this;
 	}
+	
 }

@@ -8,7 +8,11 @@ package us.theaura.gemen.server.sync.initializer;
  * @author Shortninja
  */
 
-public interface Initializable
-{
+public interface Initializable {
+	
+	/**
+	 * Block to initialized the needed instance.
+	 */
 	public void initialize();
+	
 }

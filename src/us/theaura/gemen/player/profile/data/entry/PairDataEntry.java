@@ -8,13 +8,12 @@ package us.theaura.gemen.player.profile.data.entry;
  * @author Shortninja
  */
 
-public class PairDataEntry extends DataEntry
-{
+public class PairDataEntry extends DataEntry {
+	
 	/**
 	 * Instantiation defaults key to "key" and value to "value" for null safety.
 	 */
-	public PairDataEntry()
-	{
+	public PairDataEntry() {
 		setKey("key");
 		setValue("value");
 	}
@@ -22,16 +21,14 @@ public class PairDataEntry extends DataEntry
 	/**
 	 * @return The zeroth-index value as a boolean.
 	 */
-	public String key()
-	{
+	public String key() {
 		return value(0);
 	}
 	
 	/**
 	 * @return The first-index value as a String.
 	 */
-	public String value()
-	{
+	public String value() {
 		return value(1);
 	}
 	
@@ -39,8 +36,7 @@ public class PairDataEntry extends DataEntry
 	 * @param key String to set as the key.
 	 * @return Current instance.
 	 */
-	public PairDataEntry setKey(String key)
-	{
+	public PairDataEntry setKey(String key) {
 		values.set(0, key);
 		
 		return this;
@@ -50,10 +46,10 @@ public class PairDataEntry extends DataEntry
 	 * @param value String to set as the key's value.
 	 * @return Current instance.
 	 */
-	public PairDataEntry setValue(String value)
-	{
+	public PairDataEntry setValue(String value) {
 		values.set(1, value);
 		
 		return this;
 	}
+	
 }

@@ -6,10 +6,11 @@ package us.theaura.gemen.util.lib.thunderbolt.org.json;
  * 
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-public interface JSONAware
-{
+public interface JSONAware {
+	
 	/**
 	 * @return JSON text
 	 */
 	String toJSONString();
+	
 }
