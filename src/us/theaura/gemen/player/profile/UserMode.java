@@ -14,43 +14,36 @@ import us.theaura.gemen.util.lib.hex.Strings;
  * @author Shortninja
  */
 
-public enum UserMode
-{
+public enum UserMode {
+	
 	EASY("easy", 1.0, 1.0, 0, 3600000, false,
-		new String[]
-		{
+		new String[] {
 			Strings.prefix("Easy mode features:", "&b"),
 			Strings.prefix("Locks in for %a%.", "&c"),
 			Strings.prefix("- Disables PvP", "&7")
 		}
 	),
-	
 	NORMAL("normal", 1.0, 1.0, 0, 3600000, true,
-		new String[]
-		{
+		new String[] {
 			Strings.prefix("Normal mode features:", "&b"),
 			Strings.prefix("Locks in for %a%.", "&c"),
 			Strings.prefix("- Enables PvP", "&7")
 		}
 	),
-	
-	HARDCORE("hardcore", 1.5, 0.80, 50000, 28800000, true,
-		new String[]
-		{
+	HARDCORE("hardcore", 1.5, 0.75, 50000, 28800000, true,
+		new String[] {
 			Strings.prefix("Hardcore mode features:", "&b"),
 			Strings.prefix("Locks in for %a%.", "&c"),
-			Strings.prefix("- Boost shop sell prices, ", "&7"),
-			Strings.prefix("- Lower oxygen supply maximum and lose experience on death", "&7")
+			Strings.prefix("- Boost shop sell prices ", "&7"),
+			Strings.prefix("- Lose oxygen faster, lose experience on death", "&7")
 		}
 	),
-
-	REALISM("hardcore", 1.5, 0.80, 50000, 28800000, true,
-		new String[]
-		{
+	REALISM("hardcore", 1.5, 0.75, 50000, 28800000, true,
+		new String[] {
 	    	Strings.prefix("Realism mode features:", "&b"),
 	    	Strings.prefix("Locks in for %a%.", "&c"),
 	    	Strings.prefix("- Enables PvP, boosts shop sell prices", "&7"),
-	    	Strings.prefix("- Lower oxygen supply and lose experience on death", "&7"),
+	    	Strings.prefix("- Lose oxygen faster, lose experience on death", "&7"),
 	    	Strings.prefix("- Currently work in progress!", "&7")
 		}
 	);
@@ -64,8 +57,7 @@ public enum UserMode
 	private boolean canAttack;
 	private String[] info;
 	
-	UserMode(String identifier, double priceMultiplier, double oxygenMultiplier, long cooldown, long experienceLoss, boolean canAttack, String[] info)
-	{
+	UserMode(String identifier, double priceMultiplier, double oxygenMultiplier, long cooldown, long experienceLoss, boolean canAttack, String[] info) {
 		this.identifier = identifier;
 		this.priceMultiplier = priceMultiplier;
 		this.oxygenMultiplier = oxygenMultiplier;
@@ -75,51 +67,69 @@ public enum UserMode
 		this.info = info;
 	}
 	
-	public static UserMode mode(String name)
-	{
-		return values.get(name);
+	/**
+	 * @param identifier Identifier for the mode.
+	 * @return The mode associated with this identifier; may be null.
+	 */
+	public static UserMode mode(String identifier) {
+		return values.get(identifier);
 	}
 	
-	public String identifier()
-	{
+	/**
+	 * @return Identifier for this mode.
+	 */
+	public String identifier() {
 		return identifier;
 	}
 	
-	public double priceMultiplier()
-	{
+	/**
+	 * @return Price multiplier for this mode.
+	 */
+	public double priceMultiplier() {
 		return priceMultiplier;
 	}
 	
-	public double oxygenMultiplier()
-	{
+	/**
+	 * @return Oxygen multiplier for this mode.
+	 */
+	public double oxygenMultiplier() {
 		return oxygenMultiplier;
 	}
 	
-	public long cooldown()
-	{
+	/**
+	 * @return Cooldown for changing from this mode.
+	 */
+	public long cooldown() {
 		return cooldown;
 	}
 	
-	public long experienceLoss()
-	{
+	/**
+	 * @return Amount of experience loss on death with this mode.
+	 */
+	public long experienceLoss() {
 		return -experienceLoss;
 	}
 	
-	public boolean attack()
-	{
+	/**
+	 * @return Whether or not this mode allows PvP.
+	 */
+	public boolean canAttack() {
 		return canAttack;
 	}
-	
-	public void info(Player player)
-	{
+
+	/**
+	 * Sends a clickable message with information about this mode.
+	 * 
+	 * @param player Player to send message to.
+	 */
+	public void sendInfo(Player player) {
 		
 	}
 	
-	static
-	{
-		for(UserMode mode : values())
-		{
+	static {
+		for(UserMode mode : values()) {
 			values.put(mode.name(), mode);
 		}
 	}
+	
 }

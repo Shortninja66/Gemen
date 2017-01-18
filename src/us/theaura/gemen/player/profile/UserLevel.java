@@ -1,7 +1,5 @@
 package us.theaura.gemen.player.profile;
 
-import java.util.UUID;
-
 /**
  * Object for handling and storing user level information.
  * 
@@ -9,53 +7,57 @@ import java.util.UUID;
  * @author Shortninja
  */
 
-public class UserLevel
-{
+public class UserLevel {
+	
 	public static final int START_EXPERIENCE = 50000;
 	public static final int EXPERIENCE_INCREMENT = 100000;
 	public static final int LEVEL_MAX = 50;
-	private UUID uuid;
 	private int level;
 	private long start;
 	private long end;
 	
-	public UserLevel(UUID uuid, int level, long start, long end)
-	{
-		this.uuid = uuid;
+	/**
+	 * Constructor for existing level instances.
+	 */
+	public UserLevel(int level, long start, long end) {
 		this.level = level;
 		this.start = start;
 		this.end = end;
 	}
 	
-	public UserLevel(UUID uuid)
-	{
-		this(uuid, 1, 0, START_EXPERIENCE);
+	/**
+	 * Constructor for new level instances.
+	 */
+	public UserLevel() {
+		this(1, 0, START_EXPERIENCE);
 	}
 	
-	public UUID uuid()
-	{
-		return uuid;
-	}
-	
-	public int current()
-	{
+	/**
+	 * @return Current level.
+	 */
+	public int current() {
 		return level;
 	}
 	
-	public long start()
-	{
+	/**
+	 * @return Current starting-end experience.
+	 */
+	public long start() {
 		return start;
 	}
 	
-	public long end()
-	{
+	/**
+	 * @return Current end-point experience.
+	 */
+	public long end() {
 		return end;
 	}
 	
-	public void updateLevel(int level)
-	{
-		if(Math.abs(this.level + level) > LEVEL_MAX)
-		{
+	/**
+	 * @param level Levels to add to this instance; negative values allowed.
+	 */
+	public void updateLevel(int level) {
+		if(Math.abs(this.level + level) > LEVEL_MAX) {
 			return;
 		}
 		
@@ -63,19 +65,20 @@ public class UserLevel
 		setExperience(this.level);
 	}
 	
-	public void updateExperience(long amount)
-	{
+	/**
+	 * @param amount Experience to give to this instance.
+	 */
+	public void updateExperience(long amount) {
 		this.start += amount;
 		
-		if(start >= end)
-		{
+		if(start >= end) {
 			updateLevel(1);
 		}
 	}
 	
-	private void setExperience(int level)
-	{
+	private void setExperience(int level) {
 		start = 0;
 		end = START_EXPERIENCE + (EXPERIENCE_INCREMENT * level);
 	}
+	
 }

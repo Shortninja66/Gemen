@@ -9,9 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import us.theaura.gemen.Backend;
+import us.theaura.gemen.player.gui.AbstractGui;
+import us.theaura.gemen.player.language.Locale;
 import us.theaura.gemen.player.profile.data.UserData;
 import us.theaura.gemen.player.profile.data.UserKey;
-import us.theaura.gemen.util.JavaUtils;
 import us.theaura.gemen.util.lib.thunderbolt.io.ThunderFile;
 
 /**
@@ -21,115 +22,183 @@ import us.theaura.gemen.util.lib.thunderbolt.io.ThunderFile;
  * @author Shortninja
  */
 
-public class User
-{
+public class User {
+	
 	private UUID uuid;
 	private String name;
+	private Locale locale;
 	private UserLevel level;
 	private UserMode mode;
 	private Set<RankMap> ranks;
 	private UserData data;
 	private ThunderFile file = null;
+	private AbstractGui gui = null;
 	private boolean isOnline = true;
 	
-	public User(UUID uuid, String name, UserLevel level, UserMode mode, Set<RankMap> ranks, UserData data)
-	{
+	/**
+	 * Constructor for existing users.
+	 */
+	public User(UUID uuid, String name, Locale locale, UserLevel level, UserMode mode, Set<RankMap> ranks, UserData data, boolean hasData) {
 		this.uuid = uuid;
 		this.name = name;
+		this.locale = locale;
 		this.level = level;
 		this.mode = mode;
 		this.ranks = ranks;
 		this.data = data;
 		
 		file = Backend.instance().data.load(uuid.toString(), "users");
+		
+		if(!hasData) {
+			initialize();
+		}
 	}
 	
-	public User(UUID uuid, String name)
-	{
-		this(uuid, name, new UserLevel(uuid), UserMode.EASY, new HashSet<RankMap>(), new UserData(uuid));
-		initialize();
+	/**
+	 * Constructor for new users. Initializes data entries.
+	 */
+	public User(UUID uuid, String name, Locale locale) {
+		this(uuid, name, locale, new UserLevel(), UserMode.EASY, new HashSet<RankMap>(), new UserData(uuid), false);
 	}
 	
-	public Player player()
-	{
+	/**
+	 * @return Player associated with this user.
+	 */
+	public Player player() {
 		return Bukkit.getPlayer(uuid);
 	}
 	
-	public UUID uuid()
-	{
+	/**
+	 * @return User's UUID.
+	 */
+	public UUID uuid() {
 		return uuid;
 	}
 	
-	public String name()
-	{
+	/**
+	 * @return User's most recent player name.
+	 */
+	public String name() {
 		return name;
 	}
 	
-	public UserLevel level()
-	{
+	/**
+	 * @return User's assumed or set locale; default to English.
+	 */
+	public Locale locale() {
+		return locale;
+	}
+	
+	/**
+	 * @return User's level instance.
+	 */
+	public UserLevel level() {
 		return level;
 	}
 	
-	public UserMode mode()
-	{
+	/**
+	 * @return User's mode type.
+	 */
+	public UserMode mode() {
 		return mode;
 	}
 	
-	public Set<RankMap> ranks()
-	{
+	/**
+	 * @return All ranks for this user.
+	 */
+	public Set<RankMap> ranks() {
 		return Collections.unmodifiableSet(ranks);
 	}
 	
-	public UserData data()
-	{
+	/**
+	 * @return User's data instance.
+	 */
+	public UserData data() {
 		return data;
 	}
 	
-	public ThunderFile file()
-	{
+	/**
+	 * @return User's associated ThunderFile.
+	 */
+	public ThunderFile file() {
 		return file;
 	}
 	
-	public boolean hasRank(RankMap rank)
-	{
+	/**
+	 * @return User's current open GUI; may be null.
+	 */
+	public AbstractGui gui() {
+		return gui;
+	}
+	
+	/**
+	 * @param rank The rank to query for.
+	 * @return Whether or not this user has the given rank.
+	 */
+	public boolean hasRank(RankMap rank) {
 		return ranks.contains(rank);
 	}
 	
-	public boolean isOnline()
-	{
+	/**
+	 * @return Whether or not the user is detected as online.
+	 */
+	public boolean isOnline() {
 		return isOnline;
 	}
 	
-	public void setMode(UserMode mode)
-	{
+	/**
+	 * @param name Name to update to.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/**
+	 * @param locale Locale to set for this user.
+	 */
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+	
+	/**
+	 * @param mode Mode to set to for this user.
+	 */
+	public void setMode(UserMode mode) {
 		this.mode = mode;
 	}
 	
-	public void setOnline(boolean isOnline)
-	{
+	/**
+	 * @param gui Gui to set as current for this user.
+	 */
+	public void setGui(AbstractGui gui) {
+		this.gui = gui;
+	}
+	
+	/**
+	 * @param isOnline Current online status for this user.
+	 */
+	public void setOnline(boolean isOnline) {
 		this.isOnline = isOnline;
 	}
 	
-	public void addRank(RankMap rank)
-	{
+	/**
+	 * @param rank Rank to grant this user.
+	 */
+	public void addRank(RankMap rank) {
 		ranks.add(rank);
 	}
 	
-	public void removeRank(RankMap rank)
-	{
+	/**
+	 * @param rank Rank to revoke from this user.
+	 */
+	public void removeRank(RankMap rank) {
 		ranks.remove(rank);
+	}	
+	
+	private void initialize() {
+		for(UserKey key : UserKey.values()) {
+			data.put(key.index(), key.standard());
+		}
 	}
 	
-	private void initialize()
-	{
-		long now = System.currentTimeMillis();
-		
-		data.add(UserKey.JOIN_TIME.get(), Long.toString(now));
-		data.add(UserKey.JOIN_DATE.get(), JavaUtils.getDate(now));
-		data.add(UserKey.UNIQUE_JOIN.get(), Integer.toString(1));
-		data.add(UserKey.IGNORE_PACK.get(), Boolean.toString(false));
-		data.add(UserKey.PREFIX.get(), "");
-		data.add(UserKey.NICK.get(), "&7");
-		data.add(UserKey.GUI_COLOR.get(), Integer.toString(9));
-	}
 }
