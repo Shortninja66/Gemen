@@ -1,4 +1,4 @@
-# Gemen v0.9.0-BETA
+# Gemen v0.9.2-BETA
 This is the main API used to connect all of TheAura's "modules" (otherwise known as plugins) together. Usage of the API can be for anything, whether it be for your own server or to help add onto TheAura!
 
 #### What is TheAura?
@@ -6,14 +6,12 @@ This is the main API used to connect all of TheAura's "modules" (otherwise known
 
 #### What can I do with this?
 * Help TheAura by submitting your own modules with any feature you want!
-* Use the API for your own server's backend. TheAura's API is constantly changing and quite mature, so you don't have to worry about updating everything on your own!
-* Commit to this repository in order to increase functionality and stability of the API.
+* Use the some of the API for your own server's backend. TheAura's API is constantly changing and quite mature, so you don't have to worry about updating everything on your own!
+* Commit to this repository in order to increase stability of the API (and thus the server!).
 * Just look at it to learn!
 
 #### Planned features
-1. Re-add all old features from original Commons.
-2. Web and database support hooks
-3. Finish documentation
+1. Web and database support hooks
 
 #### Useful links
 * [Subreddit](https://www.reddit.com/r/TheAura/)
