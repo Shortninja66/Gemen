@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import us.theaura.gemen.Backend;
+import us.theaura.gemen.player.gui.base.GlassConstructor;
 import us.theaura.gemen.player.profile.User;
-import us.theaura.gemen.util.lib.hex.Items;
+import us.theaura.gemen.util.lib.bukkit.BukkitUtils;
 
 /**
  * Abstract base class for all GUIs that makes click events much simpler.
@@ -19,79 +20,67 @@ import us.theaura.gemen.util.lib.hex.Items;
  * @author Shortninja
  */
 
-public abstract class AbstractGui
-{
+public abstract class AbstractGui {
+	
+	private static final GlassConstructor GLASS = new GlassConstructor();
 	private Inventory inventory;
 	private String title;
 	private Map<Integer, ClickAction> actions = new HashMap<Integer, ClickAction>();
 	
-	public AbstractGui(int size, String title)
-	{
+	/**
+	 * @param size Size of the inventory, Bukkit restrictions apply.
+	 * @param title Title of the inventory, colorized.
+	 */
+	public AbstractGui(int size, String title) {
 		this.title = title;
-		inventory = Bukkit.createInventory(null, size, title);
+		inventory = Bukkit.createInventory(null, size, BukkitUtils.colorize(title));
 	}
 	
-	public String title()
-	{
+	/**
+	 * @return Title of the current inventory.
+	 */
+	public String title() {
 		return title;
 	}
 	
-	public Inventory inventory()
-	{
-		return inventory;
-	}
-	
-	public ClickAction action(int slot)
-	{
+	/**
+	 * @param slot Slot of the clicked item.
+	 * @return ClickAction associated with the given slot; may be null.
+	 */
+	public ClickAction action(int slot) {
 		return actions.get(slot);
 	}
 	
-	public void setItem(int slot, ItemStack item, ClickAction action)
-	{
+	/**
+	 * @param slot Slot of the clickable item.
+	 * @param item Clickable item to use.
+	 * @param action Action to carry out when item is clicked; null is allowed.
+	 */
+	public void setItem(int slot, ItemStack item, ClickAction action) {
 		inventory.setItem(slot, item);
-		
-		if(action != null)
-		{
-			actions.put(slot, action);
-		}
+		actions.put(slot, action);
 	}
 	
-	public void setGlass(User user)
-	{
-		ItemStack item = glassItem((short) 14);
-		
-		ClickAction action = new ClickAction()
-		{
-			@Override
-			public void click(Player player, ItemStack item, int slot)
-			{
-				// TODO: ColorGui
-			}
-			
-			@Override
-			public boolean shouldClose()
-			{
-				return false;
-			}
-		};
-		
-		for(int i = 0; i < 3; i++)
-		{
-			int slot = 9 * i;
-			
-			setItem(slot, item, action);
-			setItem(slot + 8, item, action);
+	/**
+	 * Attempts to set glass on the sides of an inventory. Will emit warning if inventory size is greater
+	 * than 27.
+	 * 
+	 * @param user User to get glass color from.
+	 */
+	public void setGlass(User user) {
+		if(inventory.getSize() > 27) {
+			Backend.instance().log.warn("Inventory '" + title + "' is too large to be themed!", false);
+			return;
 		}
+		
+		GLASS.setGlass(this, user);
 	}
 	
-	private ItemStack glassItem(short data)
-	{
-		ItemStack item = Items.builder()
-				.setMaterial(Material.STAINED_GLASS_PANE).setAmount(1).setData(data)
-				.setName("&bColor #" + data)
-				.addLore("&7Click to change your GUI color!")
-				.build();
-		
-		return item;
+	/**
+	 * @param player Player to open inventory for.
+	 */
+	public void open(Player player) {
+		player.openInventory(inventory);
 	}
+	
 }
