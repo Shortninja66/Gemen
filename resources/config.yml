@@ -1,4 +1,19 @@
-# TheAura | Made with love by Shortninja - ♥
+# Gemen | Made with love by Shortninja - ♥
+
+############################################################
+# +------------------------------------------------------+ #
+# |                        General                       | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Primary color in messages; general words. "&p" in messages.
+primary-color: "&b"
+
+# Secondary color in messages; key words. "&s" in messages.
+secondary-color: "&7"
+
+# Tertiary color in messages; special characters. "&t" in messages
+tertiary-color: "&8"
 
 ############################################################
 # +------------------------------------------------------+ #
